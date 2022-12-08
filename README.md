@@ -72,9 +72,10 @@ You can run this application either running it via **Docker** **OR** **Locally**
 ## Running Application 
 
 > **Note 1:** Even though the application was built using Django Rest Framework, the admin page isn't available for this current version.
-> **Note 2:**No authentication needed for the current version.
 
-In your browser your can access the following address `127.0.0.1:8000/`
+> **Note 2:** No authentication needed for the current version.
+
+In your browser you can access the following address `127.0.0.1:8000/`
 ### Documentation
 You can find the api documentation by accessing `127.0.0.1:8000/api/docs/`
 > **Note:**  The documentation was made using Swagger, by accessing this URL you can also make requests to all resources available.
