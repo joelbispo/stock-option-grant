@@ -30,11 +30,17 @@ class VestingAPITestCase(TestCase):
                     "duration_months": 48,
                 }
             ],
-            "company_valuations": [{"price": 10.0, "valuation_date": "09-12-2017"}],
+            "company_valuations": [
+                {
+                    "price": 10.0,
+                    "valuation_date": "09-12-2017"
+                }
+            ],
         }
 
         # Act
-        response = self.__client.post(VESTING_SCHEDULE_URL, payload, format="json")
+        response = self.__client.post(
+            VESTING_SCHEDULE_URL, payload, format="json")
 
         # Assert
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -48,45 +54,50 @@ class VestingAPITestCase(TestCase):
         # Assert
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_given_get_request_rest_method_when_generate_schedule_then_fails(self):
+    def test_given_get_method_when_generate_schedule_then_fails(self):
         """Test the generate schedule fails when GET request method."""
         # Act
         response = self.__client.get(VESTING_SCHEDULE_URL)
 
         # Assert
-        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+        self.assertEqual(response.status_code,
+                         status.HTTP_405_METHOD_NOT_ALLOWED)
 
-    def test_given_put_request_rest_method_when_generate_schedule_then_fails(self):
+    def test_given_put_method_when_generate_schedule_then_fails(self):
         """Test the generate schedule fails when PUT request method."""
         # Act
         response = self.__client.put(VESTING_SCHEDULE_URL)
 
         # Assert
-        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+        self.assertEqual(response.status_code,
+                         status.HTTP_405_METHOD_NOT_ALLOWED)
 
-    def test_given_delete_request_rest_method_when_generate_schedule_then_fails(self):
+    def test_given_delete_method_when_generate_schedule_then_fails(self):
         """Test the generate schedule fails when DELETE request method."""
         # Act
         response = self.__client.delete(VESTING_SCHEDULE_URL)
 
         # Assert
-        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+        self.assertEqual(response.status_code,
+                         status.HTTP_405_METHOD_NOT_ALLOWED)
 
-    def test_given_patch_request_rest_method_when_generate_schedule_then_fails(self):
+    def test_given_patch_method_when_generate_schedule_then_fails(self):
         """Test the generate schedule fails when PATCH request method."""
         # Act
         response = self.__client.patch(VESTING_SCHEDULE_URL)
 
         # Assert
-        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+        self.assertEqual(response.status_code,
+                         status.HTTP_405_METHOD_NOT_ALLOWED)
 
-    def test_given_head_request_rest_method_when_generate_schedule_then_fails(self):
+    def test_given_head_method_when_generate_schedule_then_fails(self):
         """Test the generate schedule fails when HEAD request method."""
         # Act
         response = self.__client.head(VESTING_SCHEDULE_URL)
 
         # Assert
-        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+        self.assertEqual(response.status_code,
+                         status.HTTP_405_METHOD_NOT_ALLOWED)
 
     def test_given_invalid_payload_when_generate_schedule_then_fails(self):
         """Test the generate schedule fails when invalid payload."""
@@ -96,7 +107,7 @@ class VestingAPITestCase(TestCase):
         # Assert
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_given_invalid_option_grants_when_generate_schedule_then_fails(self):
+    def test_given_invalid_option_when_generate_schedule_then_fails(self):
         """Test the generate schedule fails when invalid option grants."""
         # Act
         response = self.__client.post(
@@ -106,7 +117,7 @@ class VestingAPITestCase(TestCase):
         # Assert
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_given_invalid_company_valuations_when_generate_schedule_then_fails(self):
+    def test_given_invalid_company_val_when_generate_schedule_then_fails(self):
         """Test the generate schedule fails when invalid company valuations."""
         # Act
         response = self.__client.post(
@@ -138,11 +149,17 @@ class VestingAPIValidationTestCase(TestCase):
                     "duration_months": 48,
                 }
             ],
-            "company_valuations": [{"price": 10.0, "valuation_date": "2017-01-01"}],
+            "company_valuations": [
+                {
+                    "price": 10.0,
+                    "valuation_date": "2017-01-01"
+                }
+            ],
         }
 
         # Act
-        response = self.__client.post(VESTING_SCHEDULE_URL, payload, format="json")
+        response = self.__client.post(
+            VESTING_SCHEDULE_URL, payload, format="json")
 
         # Assert
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -152,11 +169,17 @@ class VestingAPIValidationTestCase(TestCase):
 
         # Arrange
         payload = {
-            "company_valuations": [{"price": 10.0, "valuation_date": "2017-01-01"}]
+            "company_valuations": [
+                {
+                    "price": 10.0,
+                    "valuation_date": "2017-01-01"
+                }
+            ]
         }
 
         # Act
-        response = self.__client.post(VESTING_SCHEDULE_URL, payload, format="json")
+        response = self.__client.post(
+            VESTING_SCHEDULE_URL, payload, format="json")
 
         # Assert
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -177,12 +200,13 @@ class VestingAPIValidationTestCase(TestCase):
         }
 
         # Act
-        response = self.__client.post(VESTING_SCHEDULE_URL, payload, format="json")
+        response = self.__client.post(
+            VESTING_SCHEDULE_URL, payload, format="json")
 
         # Assert
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_given_valuation_price_is_zero_when_generate_schedule_then_fails(self):
+    def test_given_price_zero_when_generate_schedule_then_fails(self):
         """Test the generate schedule fails when valuation price is zero."""
 
         # Arrange
@@ -195,17 +219,23 @@ class VestingAPIValidationTestCase(TestCase):
                     "duration_months": 48,
                 }
             ],
-            "company_valuations": [{"price": 0.0, "valuation_date": "2017-01-01"}],
+            "company_valuations": [
+                {
+                    "price": 0.0,
+                    "valuation_date": "2017-01-01"
+                }
+            ],
         }
 
         # Act
-        response = self.__client.post(VESTING_SCHEDULE_URL, payload, format="json")
+        response = self.__client.post(
+            VESTING_SCHEDULE_URL, payload, format="json")
 
         # Assert
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_given_valuation_price_is_negative_when_generate_schedule_then_fails(self):
-        """Test the generate schedule fails when valuation price is negative."""
+    def test_given_price_negative_when_generate_schedule_then_fails(self):
+        """Test generate schedule fails when valuation price is negative."""
 
         # Arrange
         payload = {
@@ -217,17 +247,23 @@ class VestingAPIValidationTestCase(TestCase):
                     "duration_months": 48,
                 }
             ],
-            "company_valuations": [{"price": -1.0, "valuation_date": "2017-01-01"}],
+            "company_valuations": [
+                {
+                    "price": -1.0,
+                    "valuation_date": "2017-01-01"
+                }
+            ],
         }
 
         # Act
-        response = self.__client.post(VESTING_SCHEDULE_URL, payload, format="json")
+        response = self.__client.post(
+            VESTING_SCHEDULE_URL, payload, format="json")
 
         # Assert
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_given_option_quantity_is_zero_when_generate_schedule_then_fails(self):
-        """Test the generate schedule fails when option quantity is zero."""
+    def test_given_quantity_is_zero_when_generate_schedule_then_fails(self):
+        """Test generate schedule fails when option quantity is zero."""
 
         # Arrange
         payload = {
@@ -239,17 +275,23 @@ class VestingAPIValidationTestCase(TestCase):
                     "duration_months": 48,
                 }
             ],
-            "company_valuations": [{"price": 10.0, "valuation_date": "2017-01-01"}],
+            "company_valuations": [
+                {
+                    "price": 10.0,
+                    "valuation_date": "2017-01-01"
+                }
+            ],
         }
 
         # Act
-        response = self.__client.post(VESTING_SCHEDULE_URL, payload, format="json")
+        response = self.__client.post(
+            VESTING_SCHEDULE_URL, payload, format="json")
 
         # Assert
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_given_option_quantity_is_negative_when_generate_schedule_then_fails(self):
-        """Test the generate schedule fails when option quantity is negative."""
+    def test_quantity_negative_when_generate_schedule_then_fails(self):
+        """Test generate schedule fails when option quantity is negative."""
 
         # Arrange
         payload = {
@@ -261,17 +303,23 @@ class VestingAPIValidationTestCase(TestCase):
                     "duration_months": 48,
                 }
             ],
-            "company_valuations": [{"price": 10.0, "valuation_date": "2017-01-01"}],
+            "company_valuations": [
+                {
+                    "price": 10.0,
+                    "valuation_date": "2017-01-01"
+                }
+            ],
         }
 
         # Act
-        response = self.__client.post(VESTING_SCHEDULE_URL, payload, format="json")
+        response = self.__client.post(
+            VESTING_SCHEDULE_URL, payload, format="json")
 
         # Assert
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_given_cliff_months_is_negative_when_generate_schedule_then_fails(self):
-        """Test the generate schedule fails when cliff months is negative."""
+    def test_given_cliff_negative_when_generate_schedule_then_fails(self):
+        """Test generate schedule fails when cliff months is negative."""
 
         # Arrange
         payload = {
@@ -283,17 +331,23 @@ class VestingAPIValidationTestCase(TestCase):
                     "duration_months": 48,
                 }
             ],
-            "company_valuations": [{"price": 10.0, "valuation_date": "2017-01-01"}],
+            "company_valuations": [
+                {
+                    "price": 10.0,
+                    "valuation_date": "2017-01-01"
+                }
+            ],
         }
 
         # Act
-        response = self.__client.post(VESTING_SCHEDULE_URL, payload, format="json")
+        response = self.__client.post(
+            VESTING_SCHEDULE_URL, payload, format="json")
 
         # Assert
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_given_duration_months_is_negative_when_generate_schedule_then_fails(self):
-        """Test the generate schedule fails when duration months is negative."""
+    def test_given_duration_negative_when_generate_schedule_then_fails(self):
+        """Test generate schedule fails when duration months is negative."""
 
         # Arrange
         payload = {
@@ -305,17 +359,23 @@ class VestingAPIValidationTestCase(TestCase):
                     "duration_months": -1,
                 }
             ],
-            "company_valuations": [{"price": 10.0, "valuation_date": "2017-01-01"}],
+            "company_valuations": [
+                {
+                    "price": 10.0,
+                    "valuation_date": "2017-01-01"
+                }
+            ],
         }
 
         # Act
-        response = self.__client.post(VESTING_SCHEDULE_URL, payload, format="json")
+        response = self.__client.post(
+            VESTING_SCHEDULE_URL, payload, format="json")
 
         # Assert
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_given_duration_month_is_zero_when_generate_schedule_then_fails(self):
-        """Test the generate schedule fails when duration months is zero."""
+    def test_given_duration_zero_when_generate_schedule_then_fails(self):
+        """Test generate schedule fails when duration months is zero."""
 
         # Arrange
         payload = {
@@ -327,19 +387,23 @@ class VestingAPIValidationTestCase(TestCase):
                     "duration_months": 0,
                 }
             ],
-            "company_valuations": [{"price": 10.0, "valuation_date": "2017-01-01"}],
+            "company_valuations": [
+                {
+                    "price": 10.0,
+                    "valuation_date": "2017-01-01"
+                }
+            ],
         }
 
         # Act
-        response = self.__client.post(VESTING_SCHEDULE_URL, payload, format="json")
+        response = self.__client.post(
+            VESTING_SCHEDULE_URL, payload, format="json")
 
         # Assert
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_given_cliff_months_is_greater_than_duration_months_when_generate_schedule_then_fails(
-        self,
-    ):
-        """Test the generate schedule fails when cliff months is greater than duration months."""
+    def test_given_cliff_bigger_duration_when_generate_then_fails(self):
+        """Test generate fails when cliff is bigger than duration."""
 
         # Arrange
         payload = {
@@ -351,32 +415,44 @@ class VestingAPIValidationTestCase(TestCase):
                     "duration_months": 12,
                 }
             ],
-            "company_valuations": [{"price": 10.0, "valuation_date": "2017-01-01"}],
+            "company_valuations": [
+                {
+                    "price": 10.0,
+                    "valuation_date": "2017-01-01"
+                }
+            ],
         }
 
         # Act
-        response = self.__client.post(VESTING_SCHEDULE_URL, payload, format="json")
+        response = self.__client.post(
+            VESTING_SCHEDULE_URL, payload, format="json")
 
         # Assert
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_given_option_grants_is_empty_when_generate_schedule_then_fails(self):
+    def test_given_option_grants_empty_when_generate_schedule_then_fails(self):
         """Test the generate schedule fails when option grants is empty."""
 
         # Arrange
         payload = {
             "option_grants": [],
-            "company_valuations": [{"price": 10.0, "valuation_date": "2017-01-01"}],
+            "company_valuations": [
+                {
+                    "price": 10.0,
+                    "valuation_date": "2017-01-01"
+                }
+            ],
         }
 
         # Act
-        response = self.__client.post(VESTING_SCHEDULE_URL, payload, format="json")
+        response = self.__client.post(
+            VESTING_SCHEDULE_URL, payload, format="json")
 
         # Assert
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_given_company_valuations_is_empty_when_generate_schedule_then_fails(self):
-        """Test the generate schedule fails when company valuations is empty."""
+    def test_given_company_empty_when_generate_schedule_then_fails(self):
+        """Test generate schedule fails when company empty."""
 
         # Arrange
         payload = {
@@ -392,15 +468,14 @@ class VestingAPIValidationTestCase(TestCase):
         }
 
         # Act
-        response = self.__client.post(VESTING_SCHEDULE_URL, payload, format="json")
+        response = self.__client.post(
+            VESTING_SCHEDULE_URL, payload, format="json")
 
         # Assert
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_given_vested_quantity_is_less_than_zero_when_generate_schedule_then_fails(
-        self,
-    ):
-        """Test the generate schedule fails when vested quantity is less than zero."""
+    def test_given_price_less_zero_when_generate_schedule_then_fails(self):
+        """Test generate schedule fails when price is less than zero."""
 
         # Arrange
         payload = {
@@ -412,33 +487,17 @@ class VestingAPIValidationTestCase(TestCase):
                     "duration_months": 48,
                 }
             ],
-            "company_valuations": [{"price": 10.0, "valuation_date": "2017-01-01"}],
-        }
-
-        # Act
-        response = self.__client.post(VESTING_SCHEDULE_URL, payload, format="json")
-
-        # Assert
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-
-    def test_given_price_is_less_than_zero_when_generate_schedule_then_fails(self):
-        """Test the generate schedule fails when price is less than zero."""
-
-        # Arrange
-        payload = {
-            "option_grants": [
+            "company_valuations": [
                 {
-                    "quantity": 4800,
-                    "start_date": "2018-01-01",
-                    "cliff_months": 12,
-                    "duration_months": 48,
+                    "price": -1.0,
+                    "valuation_date": "2017-01-01"
                 }
             ],
-            "company_valuations": [{"price": -1.0, "valuation_date": "2017-01-01"}],
         }
 
         # Act
-        response = self.__client.post(VESTING_SCHEDULE_URL, payload, format="json")
+        response = self.__client.post(
+            VESTING_SCHEDULE_URL, payload, format="json")
 
         # Assert
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)

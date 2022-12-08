@@ -6,7 +6,8 @@ from decimal import Decimal
 
 from django.test import TestCase
 from vesting.models import CompanyValuation, OptionGrant
-from vesting.use_cases.generate_schedule.use_case import GenerateScheduleUseCase
+from vesting.use_cases.generate_schedule.use_case import \
+    GenerateScheduleUseCase
 
 
 class GenerateScheduleUseCaseTest(TestCase):
@@ -70,7 +71,8 @@ class GenerateScheduleUseCaseTest(TestCase):
 
         # Act
         with self.assertRaises(ValueError):
-            self.__generate_schedule_use_case.execute(option_grant, company_valuation)
+            self.__generate_schedule_use_case.execute(
+                option_grant, company_valuation)
 
     def test_generate_schedule_use_case_with_invalid_cliff(self):
         """Test the generate schedule use case with invalid cliff."""
@@ -88,7 +90,8 @@ class GenerateScheduleUseCaseTest(TestCase):
 
         # Act
         with self.assertRaises(ValueError):
-            self.__generate_schedule_use_case.execute(option_grant, company_valuation)
+            self.__generate_schedule_use_case.execute(
+                option_grant, company_valuation)
 
     def test_generate_schedule_use_case_with_invalid_duration(self):
         """Test the generate schedule use case with invalid duration."""
@@ -106,4 +109,5 @@ class GenerateScheduleUseCaseTest(TestCase):
 
         # Act
         with self.assertRaises(ValueError):
-            self.__generate_schedule_use_case.execute(option_grant, company_valuation)
+            self.__generate_schedule_use_case.execute(
+                option_grant, company_valuation)

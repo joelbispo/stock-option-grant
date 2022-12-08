@@ -1,24 +1,24 @@
 """
 Generate a schedule of vesting events for a given grant of options.
 """
+import datetime
 from decimal import Decimal
 
 from dateutil.relativedelta import relativedelta
 from vesting.models import CompanyValuation, OptionGrant, Vest
-import datetime
 
 
 class GenerateScheduleUseCase:
     """ Generate a schedule of vesting events for a given grant of options."""
 
-    def execute(self, option_grants: OptionGrant, company_valuations: CompanyValuation):
+    def execute(self, option_grants: OptionGrant,
+                company_valuations: CompanyValuation):
         """Execute the schedule generation."""
 
         return self._calculate_vests(option_grants, company_valuations)
 
-    def _calculate_vests(
-        self, option_grants: OptionGrant, company_valuations: CompanyValuation
-    ) -> list[Vest]:
+    def _calculate_vests(self, option_grants: OptionGrant,
+                         company_valuations: CompanyValuation) -> list[Vest]:
         """
         Calculate the vesting schedule for a given grant of options.
         """
@@ -28,7 +28,7 @@ class GenerateScheduleUseCase:
         if option_grants.cliff_months > duration:
             raise ValueError("Cliff must be less than or equal to duration.")
 
-        if option_grants.start_date < company_valuations.date:
+        if option_grants.start_date < company_valuations.valuation_date:
             raise ValueError(
                 "Start date must be greater than or equal to valuation date."
             )
@@ -59,10 +59,11 @@ class GenerateScheduleUseCase:
         month: int,
     ) -> Vest:
         """ Calculate the vesting of a month for a given grant of options."""
-        current_date: datetime.date = start_date + relativedelta(months=+(month))
+        current_date: datetime.date = start_date + \
+            relativedelta(months=+(month))
         cliff_percentage: float = cliff / duration
 
-        current_quantity: float = quantity * ((cliff_percentage + ((month / duration) - cliff_percentage))* (((duration - cliff) + month) // duration))  # noqa
+        current_quantity: float = quantity * ((cliff_percentage + ((month / duration) - cliff_percentage)) * (((duration - cliff) + month) // duration))  # noqa
         current_value: Decimal = Decimal(current_quantity) * Decimal(price)
 
         return Vest(
