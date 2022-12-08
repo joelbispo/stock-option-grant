@@ -11,7 +11,7 @@ quantity( month) =  quantity  * ((cliffpercentage  + ((month  /  duration) -  cl
 $$
 
 # Installation instructions
-You can run this application by choose either running via docker **OR** running locally.
+You can run this application by choose either running via **Docker** **OR** **Locally**.
 
 
 ## Running with Docker
