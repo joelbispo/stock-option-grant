@@ -29,12 +29,15 @@ You can run this application by choose either running via docker **OR** running 
 
 3. Build the image
 	
-	`some-path/stock-option-grant> docker build .`
+	`$ some-path/stock-option-grant> docker build .`
+	
 	or 
-	`some-path/stock-option-grant> docker-compose build`
+	
+	`$ some-path/stock-option-grant> docker-compose build`
 
  4. Run the application
- `some-path/stock-option-grant> docker-compose up`
+ 
+     `$ some-path/stock-option-grant> docker-compose up`
 
 
 
@@ -57,10 +60,12 @@ You can run this application by choose either running via docker **OR** running 
      [Instructions of how to create a python virtual environment](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/)
 
  4. Install requirments.
- `(venv) some-path/stock-option-grant/> pip install -r /tmp/requirements.txt`
 
-4. Run the application.
- `(venv) some-path/stock-option-grant/> python manage.py runserver 0.0.0.0:8000` 
+    `$ (venv) some-path/stock-option-grant/> pip install -r /tmp/requirements.txt`
+
+5. Run the application.
+
+     `$ (venv) some-path/stock-option-grant/> python manage.py runserver 0.0.0.0:8000` 
 
 ## Running Application 
 
@@ -104,9 +109,9 @@ For full documentation access  `127.0.0.1:8000/api/docs/`
 
 ## Running Tests
 ### Locally
-`(venv) some-path/stock-option-grant/> python manage.py test` 
+`$ (venv) some-path/stock-option-grant/> python manage.py test` 
 
 ### Docker
-`some-path/stock-option-grant/> docker-compose run app -rm sh -c "python manage.py test"` 
+`$ some-path/stock-option-grant/> docker-compose run app -rm sh -c "python manage.py test"` 
 
 
