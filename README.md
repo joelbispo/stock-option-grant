@@ -63,7 +63,7 @@ You can run this application either running it via **Docker** **OR** **Locally**
 
  4. Install requirments.
 
-    `$ (venv) some-path/stock-option-grant/> pip install -r /tmp/requirements.txt`
+    `$ (venv) some-path/stock-option-grant/> pip install -r requirements.txt`
 
 5. Run the application.
 
