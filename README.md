@@ -2,7 +2,6 @@
 
 Generates a schedule for a stock option grant.
 
-> This application is built using Python 3.9 and Django Rest Framework 3.12
 
 I developed this formula to calculate values of a vest for a certain moment:
 
@@ -10,8 +9,11 @@ $$
 quantity( month) =  quantity  * ((cliffpercentage  + ((month  /  duration) -  cliffpercentage))* (((duration  -  cliff) +  month) //  duration)) 
 $$
 
+
 # Installation instructions
-You can run this application by choose either running via **Docker** **OR** **Locally**.
+> This application is built using Python 3.9 and Django Rest Framework 3.12
+
+You can run this application either running it via **Docker** **OR** **Locally**.
 
 
 ## Running with Docker
