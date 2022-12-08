@@ -501,3 +501,69 @@ class VestingAPIValidationTestCase(TestCase):
 
         # Assert
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_given_more_than_one_option_when_generate_then_fails(self):
+        """Test generate fails when option list is greater than one."""
+
+        # Arrange
+        payload = {
+            "option_grants": [
+                {
+                    "quantity": 4800,
+                    "start_date": "2018-01-01",
+                    "cliff_months": 12,
+                    "duration_months": 48,
+                },
+                {
+                    "quantity": 4800,
+                    "start_date": "2018-01-01",
+                    "cliff_months": 12,
+                    "duration_months": 48,
+                }
+            ],
+            "company_valuations": [
+                {
+                    "price": 10.0,
+                    "valuation_date": "2017-01-01"
+                }
+            ],
+        }
+
+        # Act
+        response = self.__client.post(
+            VESTING_SCHEDULE_URL, payload, format="json")
+
+        # Assert
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_given_more_than_one_company_when_generate_then_fails(self):
+        """Test generate fails when company list is greater than one."""
+
+        # Arrange
+        payload = {
+            "option_grants": [
+                {
+                    "quantity": 4800,
+                    "start_date": "2018-01-01",
+                    "cliff_months": 12,
+                    "duration_months": 48,
+                }
+            ],
+            "company_valuations": [
+                {
+                    "price": 10.0,
+                    "valuation_date": "2017-01-01"
+                },
+                {
+                    "price": 10.0,
+                    "valuation_date": "2017-01-01"
+                }
+            ],
+        }
+
+        # Act
+        response = self.__client.post(
+            VESTING_SCHEDULE_URL, payload, format="json")
+
+        # Assert
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)

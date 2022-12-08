@@ -8,5 +8,5 @@ app_name = 'vesting'
 
 urlpatterns = [
     path('schedule/',
-         views.ScheduleViewSet.as_view({'post': 'retrieve'}), name='schedule'),
+         views.ScheduleViewSet.as_view({'post': 'create'}), name='schedule'),
 ]

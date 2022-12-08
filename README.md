@@ -115,6 +115,6 @@ For full documentation access  `127.0.0.1:8000/api/docs/`
 `$ (venv) some-path/stock-option-grant/> python manage.py test` 
 
 ### Docker
-`$ some-path/stock-option-grant/> docker-compose run app -rm sh -c "python manage.py test"` 
+`$ some-path/stock-option-grant/>  docker-compose run --rm app sh -c "python manage.py test"` 
 
 

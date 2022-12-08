@@ -1,7 +1,7 @@
 
 from rest_framework import viewsets
 from vesting.serializers import OptionCompanyValuationSerializer
-from vesting.use_cases.generate_schedule.controller import \
+from vesting.use_cases.generate_schedule.generate_schedule_controller import \
     GenerateScheduleController
 
 
@@ -11,7 +11,7 @@ class ScheduleViewSet(viewsets.ViewSet):
     """
     serializer_class = OptionCompanyValuationSerializer
 
-    def retrieve(self, request, pk=None):
+    def create(self, request):
         """
         Retrieve a schedule.
         """

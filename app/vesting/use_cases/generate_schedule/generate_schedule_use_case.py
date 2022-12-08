@@ -7,6 +7,8 @@ from decimal import Decimal
 from dateutil.relativedelta import relativedelta
 from vesting.models import CompanyValuation, OptionGrant, Vest
 
+from app.shared.exceptions import BusinessValidationError
+
 
 class GenerateScheduleUseCase:
     """ Generate a schedule of vesting events for a given grant of options."""
@@ -26,10 +28,11 @@ class GenerateScheduleUseCase:
         duration: int = option_grants.duration_months
 
         if option_grants.cliff_months > duration:
-            raise ValueError("Cliff must be less than or equal to duration.")
+            raise BusinessValidationError(
+                "Cliff must be less than or equal to duration.")
 
         if option_grants.start_date < company_valuations.valuation_date:
-            raise ValueError(
+            raise BusinessValidationError(
                 "Start date must be greater than or equal to valuation date."
             )
 

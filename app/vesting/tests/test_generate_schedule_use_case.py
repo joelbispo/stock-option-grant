@@ -6,8 +6,10 @@ from decimal import Decimal
 
 from django.test import TestCase
 from vesting.models import CompanyValuation, OptionGrant
-from vesting.use_cases.generate_schedule.use_case import \
+from vesting.use_cases.generate_schedule.generate_schedule_use_case import \
     GenerateScheduleUseCase
+
+from app.shared.exceptions import BusinessValidationError
 
 
 class GenerateScheduleUseCaseTest(TestCase):
@@ -70,7 +72,7 @@ class GenerateScheduleUseCaseTest(TestCase):
         )
 
         # Act
-        with self.assertRaises(ValueError):
+        with self.assertRaises(BusinessValidationError):
             self.__generate_schedule_use_case.execute(
                 option_grant, company_valuation)
 
@@ -89,7 +91,7 @@ class GenerateScheduleUseCaseTest(TestCase):
         )
 
         # Act
-        with self.assertRaises(ValueError):
+        with self.assertRaises(BusinessValidationError):
             self.__generate_schedule_use_case.execute(
                 option_grant, company_valuation)
 
@@ -108,6 +110,46 @@ class GenerateScheduleUseCaseTest(TestCase):
         )
 
         # Act
-        with self.assertRaises(ValueError):
+        with self.assertRaises(BusinessValidationError):
             self.__generate_schedule_use_case.execute(
                 option_grant, company_valuation)
+
+    def test_given_cliff_equal_to_duration_when_execute_then_sucess(self):
+        """Test the generate schedule use case with invalid duration."""
+
+        # Arrange
+        option_grant = OptionGrant(
+            quantity=4800,
+            start_date=datetime.date(2018, 1, 1),
+            cliff_months=48,
+            duration_months=48,
+        )
+        company_valuation = CompanyValuation(
+            price=10.0, valuation_date=datetime.date(2017, 12, 9)
+        )
+
+        # Act
+        result = self.__generate_schedule_use_case.execute(
+            option_grant, company_valuation)
+
+        # Assert
+
+        # First month
+        self.assertEqual(result[0].total_value, Decimal(0.00))
+        self.assertEqual(result[0].date, datetime.date(2018, 1, 1))
+        self.assertEqual(result[0].vested_quantity, 0)
+
+        # Month 13
+        self.assertEqual(result[12].total_value, Decimal(0.00))
+        self.assertEqual(result[12].date, datetime.date(2019, 1, 1))
+        self.assertEqual(result[12].vested_quantity, 0)
+
+        # Month before last and cliff month
+        self.assertEqual(result[47].total_value, Decimal(0.00))
+        self.assertEqual(result[47].date, datetime.date(2021, 12, 1))
+        self.assertEqual(result[47].vested_quantity, 0)
+
+        # Last month and cliff month
+        self.assertEqual(result[48].total_value, Decimal(48000.00))
+        self.assertEqual(result[48].date, datetime.date(2022, 1, 1))
+        self.assertEqual(result[48].vested_quantity, 4800)
